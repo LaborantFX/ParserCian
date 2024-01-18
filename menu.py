@@ -37,17 +37,24 @@ url_list = [url1, url2, url3, url4, url5, url6, url7, url8, url9, url10, url11, 
 loc_list = [loc1, loc2, loc3, loc4, loc5, loc6, loc7, loc8, loc9, loc10, loc11, loc12]
 
 def click():
-    for i in range(0,12):
+    for i in range(0,len(url_list)):
         if selected.get() == i:
             url = url_list[i]
             loc = loc_list[i]
     word1 = ent1.get()
     word2 = ent2.get()
     word3 = ent3.get()
-    ParserCian5.main(url, word1, word2, word3, loc)
+    ParserCian5.main(url, word1, word2, word3, loc, i+1)
     sys.exit()
     
-def exit_but():
+def click_all():
+    word1 = ent1.get()
+    word2 = ent2.get()
+    word3 = ent3.get()
+    for i in range(0,len(url_list)):
+        url = url_list[i]
+        loc = loc_list[i]
+        ParserCian5.main(url, word1, word2, word3, loc, i+1)
     sys.exit()
         
 selected = IntVar()
@@ -56,6 +63,9 @@ selected.set(0)
 #combo = ttk.Combobox(name = 'name', values = location)
 
 button = ttk.Button(window, text = 'Начать парсинг', command = click)
+
+button2 = ttk.Button(window, text = "Парсить все локации", command = click_all)
+
 rad1 = ttk.Radiobutton(window, text = 'Север 1-к кв', value = 0, variable = selected)
 rad2 = ttk.Radiobutton(window, text = 'Север 2-к кв', value = 1, variable = selected)
 rad3 = ttk.Radiobutton(window, text = 'Север сред 1-к кв', value = 2, variable = selected)
@@ -79,7 +89,7 @@ ent3.insert(0, 'залог')
 
 lab = ttk.Label(text="Выберите локацию для парсинга")
 lab2 = ttk.Label(text=f"Выберите ключевые слова для поиска\n       (вводите маленькими буквами)")
-button2 = ttk.Button(window, text = "Завершить работу", command = exit_but)
+
 
 lab.pack(padx=50, pady=5)
 rad1.pack(padx=50)
@@ -101,6 +111,6 @@ ent2.pack(padx=50, pady=3)
 ent3.pack(padx=50, pady=3)
 
 button.pack(pady=5, padx=50)
-button2.pack(pady=30, padx=50)
+button2.pack(pady=10, padx=50)
 
 window.mainloop()
